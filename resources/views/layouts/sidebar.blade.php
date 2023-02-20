@@ -36,9 +36,18 @@
         <span class="iconify" data-icon="mdi:package-variant-closed-plus"></span>
         <p class="sidelinktext">Supplier</p>
     </x-sidenav-link>
+
     <x-sidenav-link :href="route('products.index')" :active="request()->routeIs('products.*')">
         <span class="iconify" data-icon="mdi:package-variant-closed"></span>
         <p class="sidelinktext">Products</p>
+    </x-sidenav-link>
+    <x-sidenav-link :href="route('clients.index')" :active="request()->routeIs('clients.*')">
+        <span class="iconify" data-icon="fluent:people-money-20-regular"></span>
+        <p class="sidelinktext">Clients</p>
+    </x-sidenav-link>
+    <x-sidenav-link :href="route('sales.index')" :active="request()->routeIs('sales.*')">
+        <span class="iconify" data-icon="material-symbols:shopping-cart-outline"></span>
+        <p class="sidelinktext">Sales</p>
     </x-sidenav-link>
     <hr class="border border-gray-400 dark:border-gray-600 my-1">
 

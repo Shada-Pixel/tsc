@@ -1,22 +1,22 @@
-// On page load or when changing themes, best to add inline in `head` to avoid FOUC
-if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-    localStorage.setItem('color-theme','dark');
+
+
+// On page load, check if dark mode is set in local storage
+if (localStorage.getItem('color-theme') === 'dark' || (window.matchMedia('(prefers-color-scheme: dark)').matches && !localStorage.getItem('color-theme'))) {
     document.documentElement.classList.add('dark');
+    localStorage.setItem('color-theme', 'dark');
 } else {
-    localStorage.removeItem("mytime");
-    document.documentElement.classList.remove('dark')
+    document.documentElement.classList.remove('dark');
+    localStorage.removeItem('color-theme');
 }
 
 // Dark mode toggle
 function darkModeToggle() {
-    if (localStorage.getItem('color-theme') !== 'dark') {
-        localStorage.setItem('color-theme','dark');
+    if (document.documentElement.classList.contains('dark')) {
+        document.documentElement.classList.remove('dark');
+        localStorage.removeItem('color-theme');
+    } else {
         document.documentElement.classList.add('dark');
-
-    }else if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-        localStorage.setItem('color-theme','light');
-        document.documentElement.classList.remove('dark')
-
+        localStorage.setItem('color-theme', 'dark');
     }
 }
 
@@ -35,6 +35,14 @@ $(document).ready(function () {
 
     // success notification
     setTimeout(function(){$( "#notificationflush" ).fadeOut(1000)}, 3000);
+
+    $('input[required], textarea[required], select[required]').each(function() {
+        $(this).prev('label').append('<span class="text-red-500">*</span>');
+    });
+
+
+
+
 });
 
 

@@ -19,6 +19,10 @@ class Purchase extends Model
         'total_weight'
     ];
 
+    protected $casts = [
+        'created_at' => 'date:d-m-Y , h:i A'
+    ];
+
     protected $with = ['supplier','purchaseItems'];
 
 

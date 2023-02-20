@@ -122,8 +122,10 @@ class PurchaseController extends Controller
      * @param  \App\Models\Purchase  $purchase
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Purchase $purchase)
+    public function destroy($id)
     {
-        //
+        $purchase = Purchase::findOrFail($id);
+        $purchase->delete();
+        return response()->json([ 'status'=> 'success', 'message' => 'Purchase Deleted'],200);
     }
 }

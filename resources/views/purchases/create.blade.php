@@ -46,7 +46,7 @@
                             <tr class="border-b border-gray-600 uppercase">
                                 <th class="text-left">Rod Size</th>
                                 <th>Quantity MTN</th>
-                                <th>&#64;Pmt</th>
+                                <th>&#64;PKG</th>
                                 <th class="text-right">Amount</th>
                             </tr>
                         </thead>
@@ -60,13 +60,13 @@
 
                                     <td>
                                         <div class="px-2 flex items-center justify-start gap-4">
-                                            <x-text-input type="number" class="w-40 qty" value="0" name="product_qty[]"/>
-                                            <p>MTN</p>
+                                            <x-text-input type="number" class="w-40 qty" value="0" name="product_qty[]" step="0.001"/>
+                                            <p>KG</p>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="px-2 flex items-center justify-start gap-4">
-                                            <x-text-input type="number" class=" w-40 unit_price" value="0" name="product_up[]"/>
+                                            <x-text-input type="number" class=" w-40 unit_price" value="0" name="product_up[]" step="0.01"/>
                                             <p>TK</p>
                                         </div>
                                     </td>
@@ -121,6 +121,7 @@
                     </table>
                 </div>
                 <div class="flex justify-end mt-6 bg-gray-300 dark:bg-gray-600 p-6">
+                    <x-reset-button>Reset</x-reset-button>
                     <x-primary-button>Purchase</x-primary-button>
                 </div>
 

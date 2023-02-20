@@ -80,10 +80,10 @@
                             data: null,
                             render: function(data) {
 
-                                // return `${data.created_at}`;
+                                return `${data.created_at}`;
 
-                                var strDate = data.created_at;
-                                return strDate.substring(0, 10);
+                                // var strDate = data.created_at;
+                                // return strDate.substring(0, 10);
 
                                 // return strDate;
                             }
@@ -93,7 +93,7 @@
                             render: function(data) {
                                 return `<div class="flex justify-end"><a href="${BASE_URL}purchases/${data.id}/edit" class="bg-gray-600 rounded-md text-gray-200 hover:text-white py-2 px-2 mx-1 hover:bg-green-400" ><span class="iconify" data-icon="dashicons:edit"></span></a>
                                     <a href="${BASE_URL}purchases/${data.id}" class="bg-gray-600 rounded-md text-gray-200 hover:text-white py-2 px-2 mx-1 hover:bg-green-400" ><span class="iconify" data-icon="bx:show"></span></a>
-                                <button type="button"  class="bg-gray-600 rounded-md text-white py-2 px-2 mx-1 hover:bg-red-400" onclick="productDelete(${data.id});"><span class="iconify" data-icon="bi:trash-fill"></span></button></div>`;
+                                <button type="button"  class="bg-gray-600 rounded-md text-white py-2 px-2 mx-1 hover:bg-red-400" onclick="purchaseDelete(${data.id});"><span class="iconify" data-icon="bi:trash-fill"></span></button></div>`;
                             }
                         }
                     ]
@@ -102,7 +102,7 @@
 
 
 
-            function productDelete(productID) {
+            function purchaseDelete(purchaseDelete) {
                 Swal.fire({
                     title: "Delete ?",
                     text: "Are you sure to delete this Purchase ?",
@@ -115,7 +115,7 @@
                     if (result.value) {
                         $.ajax({
                             method: 'DELETE',
-                            url: BASE_URL +'purchases/'+productID,
+                            url: BASE_URL +'purchases/'+purchaseDelete,
                             success: function(response) {
                                 if (response.status == "success") {
                                     Swal.fire('Success!', response.message, 'success');
