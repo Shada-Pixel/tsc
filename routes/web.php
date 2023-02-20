@@ -40,6 +40,8 @@ Route::middleware('auth')->group(function () {
     Route::resource('permissions', PermissionController::class);
     Route::resource('products', ProductController::class);
     Route::resource('suppliers', SupplierController::class);
+    Route::get('supurchases/{supplier}', [SupplierController::class,'getpurchases'])->name('supurchases');
+
     Route::resource('purchases', PurchaseController::class);
     Route::resource('clients', ClientController::class);
     Route::resource('sales', SaleController::class);

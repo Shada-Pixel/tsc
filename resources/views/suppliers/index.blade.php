@@ -69,8 +69,13 @@
                         {
                             data: null,
                             render: function(data) {
-                                return `<div class="flex justify-end"><a href="${BASE_URL}suppliers/${data.id}/edit" class="bg-gray-600 rounded-md text-gray-200 hover:text-white py-2 px-2 mx-1 hover:bg-green-400" ><span class="iconify" data-icon="dashicons:edit"></span></a>
-                                <button type="button"  class="bg-gray-600 rounded-md text-white py-2 px-2 mx-1 hover:bg-red-400" onclick="supplierDelete(${data.id});"><span class="iconify" data-icon="bi:trash-fill"></span></button></div>`;
+                                return `<div class="flex justify-end">
+                                    <a href="${BASE_URL}suppliers/${data.id}" class="bg-gray-600 rounded-md text-gray-200 hover:text-white py-2 px-2 mx-1 hover:bg-blue-400" ><span class="iconify" data-icon="ic:outline-remove-red-eye"></span>
+                                        </a>
+                                    <a href="${BASE_URL}suppliers/${data.id}/edit" class="bg-gray-600 rounded-md text-gray-200 hover:text-white py-2 px-2 mx-1 hover:bg-green-400" ><span class="iconify" data-icon="dashicons:edit"></span>
+                                        </a>
+                                <button type="button"  class="bg-gray-600 rounded-md text-white py-2 px-2 mx-1 hover:bg-red-400" onclick="supplierDelete(${data.id});"><span class="iconify" data-icon="bi:trash-fill"></span></button>
+                                </div>`;
                             }
                         }
                     ]

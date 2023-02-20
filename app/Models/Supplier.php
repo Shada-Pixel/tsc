@@ -20,4 +20,10 @@ class Supplier extends Model
         'initial_receivable',
         'status',
     ];
+
+
+    public function purchases()
+    {
+        return $this->hasMany(Purchase::class);
+    }
 }

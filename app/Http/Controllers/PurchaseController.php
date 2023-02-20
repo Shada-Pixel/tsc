@@ -62,6 +62,7 @@ class PurchaseController extends Controller
         $purchase->total_price = $request->subtotal;
         $purchase->total_paid = $request->paid;
         $purchase->total_weight = $request->totalweight;
+        $purchase->chalan_number = $request->chalan_number;
 
         if ($request->purchase_type == 2 && $request->purchase_dp ) {
             $purchase->delivery_point = $request->purchase_dp;

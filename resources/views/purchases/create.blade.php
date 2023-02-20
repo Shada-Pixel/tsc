@@ -37,6 +37,10 @@
                         <x-input-label>Delivery Point</x-input-label>
                         <x-text-input type="text" name="purchase_dp"/>
                     </div>
+                    <div class="">
+                        <x-input-label>Chalan Number</x-input-label>
+                        <x-text-input type="text" name="chalan_number" class="onlynumber" required/>
+                    </div>
                 </div>
 
                 <h2 class="my-3 pl-6">Purchases Items</h2>

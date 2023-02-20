@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Supplier;
 use App\Http\Requests\StoreSupplierRequest;
 use App\Http\Requests\UpdateSupplierRequest;
+use App\Models\Purchase;
 use Yajra\Datatables\Datatables;
 use Illuminate\Http\Request;
 
@@ -70,9 +71,27 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function show(Supplier $supplier)
+    public function show(Request $request,Supplier $supplier)
     {
-        //
+        $supplier = Supplier::with('purchases')->findOrFail($supplier->id);
+
+        if ($request->ajax()) {
+            return Datatables::of(
+                Purchase::all()
+            )->addIndexColumn()->make(true);
+        }
+        return view('suppliers.show', compact('supplier'));
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Supplier  $supplier
+     * @return \Illuminate\Http\Response
+     */
+    public function getpurchases(Supplier $supplier)
+    {
+        return Datatables::of( Purchase::where('supplier_id',$supplier->id)->get() )->addIndexColumn()->make(true);
     }
 
     /**
@@ -96,7 +115,6 @@ class SupplierController extends Controller
     public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
         $supplier = Supplier::find($supplier->id);
-
         $supplier->name = $request->name;
         $supplier->email = $request->email;
         $supplier->contact = $request->contact;

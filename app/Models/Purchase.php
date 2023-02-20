@@ -16,7 +16,8 @@ class Purchase extends Model
         'total_price',
         'total_paid',
         'delivery_point',
-        'total_weight'
+        'total_weight',
+        'chalan_number'
     ];
 
     protected $casts = [

@@ -29,7 +29,8 @@ class StorePurchaseRequest extends FormRequest
             'purchase_dp' => 'nullable|string',
             'subtotal' => 'required|string',
             'paid' => 'required|string',
-            'remain' => 'required|string'
+            'remain' => 'required|string',
+            'chalan_number' => 'required|string'
         ];
     }
 }

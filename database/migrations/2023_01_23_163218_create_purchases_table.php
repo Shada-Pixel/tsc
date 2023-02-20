@@ -20,6 +20,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained("users")->onUpdate('cascade')->onDelete('cascade');
             $table->decimal('total_price',12,2);
             $table->decimal('total_paid',12,2);
+            $table->string('chalan_number');
             $table->longText('delivery_point')->nullable();
             $table->integer('total_weight')->comment('Weight in killogram');
             $table->timestamps();
