@@ -1,50 +1,66 @@
 <x-app-layout>
     <!-- Navigation Links -->
     <x-slot name="submenu">
-        <x-nav-link :href="route('purchases.index')" :active="request()->routeIs('purchases.index')">
-            {{ __('All Purchases') }}
+        <x-nav-link :href="route('sales.index')" :active="request()->routeIs('sales.index')">
+            {{ __('All Sales') }}
         </x-nav-link>
-        <x-nav-link :href="route('purchases.create')" :active="request()->routeIs('purchases.create')">
-            {{ __('New Purchases') }}
+        <x-nav-link :href="route('sales.create')" :active="request()->routeIs('sales.create')">
+            {{ __('Create New Sale') }}
         </x-nav-link>
     </x-slot>
 
     <div class="p-6">
         <div class="bg-white dark:bg-gray-700 rounded-md text-gray-900 dark:text-white overflow-hidden">
-            <h1 class="pl-6 pt-6 mb-4 text-xl">Create New Purchase</h1>
-            <form action="{{route('purchases.store')}}" method="post" class="">
+            <form action="{{route('sales.store')}}" method="post" class="mt-4">
                 @csrf
                 <div class="px-6 grid grid-cols-1 sm:grid-cols-4 gap-3">
+
                     <div class="">
-                        <x-input-label>Supplier</x-input-label>
-                        <div class="flex items-end ">
-                            <x-select-input name="supplier_id" required>
-                                @foreach ($suppliers as $supplier)
-                                    <option class="capotalize " value="{{ $supplier->id }}">{{ $supplier->name }}</option>
-                                @endforeach
-                            </x-select-input>
-                            <a href="{{route('suppliers.create')}}" class="inline-block bg-gray-600 rounded-md text-gray-200 hover:text-white py-3 px-3 mx-1 hover:bg-blue-500"><span class="iconify" data-icon="material-symbols:add-rounded"></span></a>
-                        </div>
-                    </div>
-                    <div class="">
-                        <x-input-label>Purchase Type</x-input-label>
-                        <x-select-input name="purchase_type" required>
-                            <option class="capitalize" value="1">Store Stock</option>
-                            <option class="capitalize" value="2">Clienc Site</option>
+                        <x-input-label>Sale Type</x-input-label>
+                        <x-select-input name="sale_type" required>
+                            <option class="capitalize" value="1">Store </option>
+                            <option class="capitalize" value="2">Instant</option>
                         </x-select-input>
                     </div>
                     <div class="">
                         <x-input-label>Delivery Point</x-input-label>
-                        <x-text-input type="text" name="purchase_dp"/>
+                        <x-text-input type="text" name="sale_dp"/>
+                    </div>
+                </div>
+                <div class="px-6 grid grid-cols-1 sm:grid-cols-4 gap-3">
+                    <h3 class="col-span-4 mt-2">Client Information</h3>
+
+                    <div class="">
+                        <x-input-label>Client</x-input-label>
+                        <div class="flex items-end ">
+                            <x-select-input name="client_id" required>
+                                <option class="capotalize " value="">Select From Previous Client.</option>
+
+                                @foreach ($clients as $client)
+                                    <option class="capotalize " value="{{ $client->id }}">{{ $client->name }}</option>
+                                @endforeach
+                            </x-select-input>
+                            <a href="{{route('clients.create')}}" class="inline-block bg-gray-600 rounded-md text-gray-200 hover:text-white py-3 px-3 mx-1 hover:bg-blue-500"><span class="iconify" data-icon="material-symbols:add-rounded"></span></a>
+                        </div>
+                    </div>
+
+
+                    <div class="">
+                        <x-input-label>Name</x-input-label>
+                        <x-text-input type="text" name="client_name"/>
                     </div>
                     <div class="">
-                        <x-input-label>Chalan Number</x-input-label>
-                        <x-text-input type="text" name="chalan_number" class="onlynumber" required/>
+                        <x-input-label>Address</x-input-label>
+                        <x-text-input type="text" name="client_address"/>
+                    </div>
+                    <div class="">
+                        <x-input-label>Phone</x-input-label>
+                        <x-text-input type="text" name="client_phone"/>
                     </div>
                 </div>
 
-                <h2 class="my-3 pl-6">Purchases Items</h2>
-                <div class="p-6">
+                <h2 class="my-3 pl-6">Sales Items</h2>
+                <div class="p-6 pt-0">
                     <table class="w-full border-collapse text-left overflow-scroll" id="purctable">
                         <thead>
                             <tr class="border-b border-gray-600 uppercase">
@@ -126,9 +142,8 @@
                 </div>
                 <div class="flex justify-end mt-6 bg-gray-300 dark:bg-gray-600 p-6">
                     <x-reset-button>Reset</x-reset-button>
-                    <x-primary-button>Purchase</x-primary-button>
+                    <x-primary-button>Sale</x-primary-button>
                 </div>
-
             </form>
         </div>
     </div>
@@ -162,7 +177,7 @@
 
             // On paid
             $("#purctable tbody").on("input", ".paid", function() {
-                calc_remain();
+                calc_remain();purchase
             });
 
             function payFull(e) {

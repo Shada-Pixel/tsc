@@ -1,18 +1,21 @@
 <x-app-layout>
     <!-- Navigation Links -->
     <x-slot name="submenu">
-            <x-nav-link :href="route('suppliers.index')" :active="request()->routeIs('suppliers.index')">
-                {{ __('All Suppliers') }}
-            </x-nav-link>
-            <x-nav-link :href="route('suppliers.create')" :active="request()->routeIs('suppliers.create')">
-                {{ __('New Suppliers') }}
-            </x-nav-link>
-    </x-slot>
+        <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
+            {{ __('All Clients') }}
+        </x-nav-link>
+        <x-nav-link :href="route('clients.create')" :active="request()->routeIs('clients.create')">
+            {{ __('New Clients') }}
+        </x-nav-link>
+</x-slot>
 
     <div class="p-6">
         <div class="p-6 bg-white dark:bg-gray-700 rounded-md text-gray-900 dark:text-white">
-            <form action="{{route('suppliers.store')}}" method="POST" class="grid sm:grid-cols-2 gap-5">
+            <form action="{{route('clients.store')}}" method="POST" class="sm:grid sm:grid-cols-3 gap-5">
                 @csrf
+                <div class="sm:col-span-3">
+                    <p>Personal Information</p>
+                </div>
 
                 <!-- Name -->
                 <div>
@@ -26,46 +29,91 @@
                     <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" required  />
                     <x-input-error :messages="$errors->get('email')" class="mt-2" />
                 </div>
-                <!-- Contact -->
+                <!-- Phone -->
                 <div>
-                    <x-input-label for="contact" :value="__('Contact')" />
-                    <x-text-input id="contact" class="block mt-1 w-full onlynumber" type="text" name="contact" required  />
-                    <x-input-error :messages="$errors->get('contact')" class="mt-2" />
+                    <x-input-label for="phone" :value="__('Phone')" />
+                    <x-text-input id="phone" class="block mt-1 w-full onlynumber" type="text" name="phone" required  />
+                    <x-input-error :messages="$errors->get('phone')" class="mt-2" />
                 </div>
-                <!-- Address -->
+                <!-- Home Address -->
                 <div>
-                    <x-input-label for="address" :value="__('Address')" />
-                    <x-text-input id="address" class="block mt-1 w-full" type="text" name="address"  />
-                    <x-input-error :messages="$errors->get('address')" class="mt-2" />
+                    <x-input-label for="home_address" :value="__('Home Address')" />
+                    <x-text-input id="home_address" class="block mt-1 w-full" type="text" name="home_address"  />
+                    <x-input-error :messages="$errors->get('home_address')" class="mt-2" />
                 </div>
-                <!-- ID Number -->
+                <!-- Company Name -->
                 <div>
-                    <x-input-label for="id_number" :value="__('ID Number')" />
-                    <x-text-input id="id_number" class="block mt-1 w-full" type="text" name="id_number"  />
-                    <x-input-error :messages="$errors->get('id_number')" class="mt-2" />
-                </div>
-                <!-- Laisence -->
-                <div>
-                    <x-input-label for="laisence" :value="__('Licence')" />
-                    <x-text-input id="laisence" class="block mt-1 w-full" type="text" name="laisence"  />
-                    <x-input-error :messages="$errors->get('laisence')" class="mt-2" />
-                </div>
-                <!-- Initial Payable -->
-                <div>
-                    <x-input-label for="initial_payable" :value="__('Initial Payable')" />
-                    <x-text-input id="initial_payable" class="block mt-1 w-full onlynumber" type="text" name="initial_payable"  value="0"/>
-                    <x-input-error :messages="$errors->get('initial_payable')" class="mt-2" />
-                </div>
-                <!-- initial_receivable -->
-                <div>
-                    <x-input-label for="initial_receivable" :value="__('Initial Receivable')" />
-                    <x-text-input id="initial_receivable" class="block mt-1 w-full onlynumber" type="text" name="initial_receivable"  value="0"/>
-                    <x-input-error :messages="$errors->get('initial_receivable')" class="mt-2" />
+                    <x-input-label for="com_name" :value="__('Company Name')" />
+                    <x-text-input id="com_name" class="block mt-1 w-full" type="text" name="com_name"  />
+                    <x-input-error :messages="$errors->get('com_name')" class="mt-2" />
                 </div>
 
-                <div class="flex items-center justify-end mt-4 sm:col-span-2">
+                <!-- Company Address -->
+                <div>
+                    <x-input-label for="com_address" :value="__('Company Address')" />
+                    <x-text-input id="com_address" class="block mt-1 w-full" type="text" name="com_address"  />
+                    <x-input-error :messages="$errors->get('com_address')" class="mt-2" />
+                </div>
+                <!-- NID -->
+                <div>
+                    <x-input-label for="nid" :value="__('NID')" />
+                    <x-text-input id="nid" class="block mt-1 w-full" type="text" name="nid"  />
+                    <x-input-error :messages="$errors->get('nid')" class="mt-2" />
+                </div>
+                <hr class="sm:col-span-3 my-4"/>
+                <div class="sm:col-span-3">
+                    <p>Bank Details</p>
+                </div>
+                <div class="sm:col-span-3 sm:grid sm:grid-cols-4 gap-5">
+                    <div>
+                        <x-input-label for="bank_name " :value="__('Bank Name')" />
+                        <x-text-input id="bank_name " class="block mt-1 w-full" type="text" name="bank_name "  />
+                        <x-input-error :messages="$errors->get('bank_name ')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="bank_branch_name " :value="__('Branch Name')" />
+                        <x-text-input id="bank_branch_name " class="block mt-1 w-full" type="text" name="bank_branch_name "  />
+                        <x-input-error :messages="$errors->get('bank_branch_name ')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="bank_account_number " :value="__('Account Number')" />
+                        <x-text-input id="bank_account_number " class="block mt-1 w-full" type="text" name="bank_account_number "  />
+                        <x-input-error :messages="$errors->get('bank_account_number ')" class="mt-2" />
+                    </div>
+                    <div>
+                        <x-input-label for="bank_routing_number " :value="__('Routing Number')" />
+                        <x-text-input id="bank_routing_number " class="block mt-1 w-full" type="text" name="bank_routing_number "  />
+                        <x-input-error :messages="$errors->get('bank_routing_number ')" class="mt-2" />
+                    </div>
+                </div>
+                <hr class="sm:col-span-3 my-4"/>
+                <div class="sm:col-span-3">
+                    <p>Financial Information</p>
+                </div>
+                <div class="sm:col-span-3 sm:grid sm:grid-cols-3 gap-5">
+                    {{-- Total Purchase --}}
+                    <div>
+                        <x-input-label for="total_purchase " :value="__('Total PUrchase')" />
+                        <x-text-input id="total_purchase " class="block mt-1 w-full" type="text" name="total_purchase "  />
+                        <x-input-error :messages="$errors->get('total_purchase ')" class="mt-2" />
+                    </div>
+                    {{-- Payeabla --}}
+                    <div>
+                        <x-input-label for="amount_payable " :value="__('Payable')" />
+                        <x-text-input id="amount_payable " class="block mt-1 w-full" type="text" name="amount_payable "  />
+                        <x-input-error :messages="$errors->get('amount_payable ')" class="mt-2" />
+                    </div>
+                    {{-- Receivable --}}
+                    <div>
+                        <x-input-label for="amount_receivable " :value="__('Receivable')" />
+                        <x-text-input id="amount_receivable " class="block mt-1 w-full" type="text" name="amount_receivable "  />
+                        <x-input-error :messages="$errors->get('amount_receivable ')" class="mt-2" />
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end mt-4 sm:col-span-3">
                     <x-primary-button class="ml-4">
-                        {{ __('Create Supplier') }}
+                        {{ __('Create Client') }}
                     </x-primary-button>
                 </div>
             </form>

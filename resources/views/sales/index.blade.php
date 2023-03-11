@@ -1,50 +1,52 @@
 <x-app-layout>
     <!-- Navigation Links -->
     <x-slot name="submenu">
-        <x-nav-link :href="route('clients.index')" :active="request()->routeIs('clients.index')">
-            {{ __('All Clients') }}
+        <x-nav-link :href="route('sales.index')" :active="request()->routeIs('sales.index')">
+            {{ __('All Sales') }}
         </x-nav-link>
-        <x-nav-link :href="route('clients.create')" :active="request()->routeIs('clients.create')">
-            {{ __('New Clients') }}
+        <x-nav-link :href="route('sales.create')" :active="request()->routeIs('sales.create')">
+            {{ __('New Sales') }}
         </x-nav-link>
-</x-slot>
-
+    </x-slot>
 
     <div class="p-6">
         <div class="p-6 bg-white dark:bg-gray-700 rounded-md text-gray-900 dark:text-white">
-            <h1 class="font-xl">{{ $client->name }}</h1>
-            <p>{{ $client->email }}</p>
-            <p>{{ $client->contact }}</p>
-            <p>{{ $client->address }}</p>
-        </div>
-
-        <div class="p-6 bg-white dark:bg-gray-700 rounded-md text-gray-900 dark:text-white mt-4">
-            <h1 class="font-lg mb-6">All Sale To {{ $client->name }}</h1>
+            <div class="mb-6">
+                <form id="saleFilterForm">
+                    @csrf
+                    <div class="flex justify-between items-center gap-5">
+                        <x-text-input type="date" name="from_date" required />
+                        <p>To</p>
+                        <x-text-input type="date" name="to_date" required />
+                        <x-primary-button id="saleFilterBtn">Filter</x-primary-button>
+                    </div>
+                </form>
+            </div>
             <table id="saleTable" class="display stripe" style="width:100%">
-                <thead>
-                    <tr>
+                <thead class="text-center">
+                    <tr class="text-right">
                         <th>Sl</th>
-                        <th>Full Name</th>
-                        <th>Email</th>
-                        <th>Contact</th>
-                        <th>Address</th>
-                        <th>Payable</th>
-                        <th>Reciveable</th>
-                        <th>Action</th>
+                        <th>Supplier</th>
+                        <th>Chalan</th>
+                        <th>Total Weight</th>
+                        <th>Total Price</th>
+                        <th>Total Paid</th>
+                        <th>Sale Date</th>
+                        <th class="text-right">Action</th>
                     </tr>
                 </thead>
+
             </table>
         </div>
     </div>
+
+
     <x-slot name="script">
         <script>
             var datatablelist = $('#saleTable').DataTable({
                 processing: true,
                 serverSide: true,
-                // ajax: "{!! route('purchases.index') !!}",
-                ajax: {
-                    url: "{!! route('clientsales',$client->id) !!}",
-                },
+                ajax: "{!! route('sales.index') !!}",
                 columns: [{
                         "render": function(data, type, full, meta) {
                             return meta.row + meta.settings._iDisplayStart + 1;
@@ -53,7 +55,7 @@
                     {
                         data: null,
                         render: function(data) {
-                            return `${data.client.name}`;
+                            return `${data.supplier.name}`;
                         }
                     },
                     {
@@ -96,9 +98,9 @@
                     {
                         data: null,
                         render: function(data) {
-                            return `<div class="flex justify-end"><a href="${BASE_URL}purchases/${data.id}/edit" class="bg-gray-600 rounded-md text-gray-200 hover:text-white py-2 px-2 mx-1 hover:bg-green-400" ><span class="iconify" data-icon="dashicons:edit"></span></a>
-                                    <a href="${BASE_URL}purchases/${data.id}" class="bg-gray-600 rounded-md text-gray-200 hover:text-white py-2 px-2 mx-1 hover:bg-green-400" ><span class="iconify" data-icon="bx:show"></span></a>
-                                <button type="button"  class="bg-gray-600 rounded-md text-white py-2 px-2 mx-1 hover:bg-red-400" onclick="purchaseDelete(${data.id});"><span class="iconify" data-icon="bi:trash-fill"></span></button></div>`;
+                            return `<div class="flex justify-end"><a href="${BASE_URL}sales/${data.id}/edit" class="bg-gray-600 rounded-md text-gray-200 hover:text-white py-2 px-2 mx-1 hover:bg-green-400" ><span class="iconify" data-icon="dashicons:edit"></span></a>
+                                    <a href="${BASE_URL}sales/${data.id}" class="bg-gray-600 rounded-md text-gray-200 hover:text-white py-2 px-2 mx-1 hover:bg-green-400" ><span class="iconify" data-icon="bx:show"></span></a>
+                                <button type="button"  class="bg-gray-600 rounded-md text-white py-2 px-2 mx-1 hover:bg-red-400" onclick="saleDelete(${data.id});"><span class="iconify" data-icon="bi:trash-fill"></span></button></div>`;
                         }
                     }
                 ]
@@ -107,10 +109,10 @@
 
 
 
-            function purchaseDelete(purchaseDelete) {
+            function saleDelete(saleDelete) {
                 Swal.fire({
                     title: "Delete ?",
-                    text: "Are you sure to delete this Purchase ?",
+                    text: "Are you sure to delete this Sale ?",
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -120,7 +122,7 @@
                     if (result.value) {
                         $.ajax({
                             method: 'DELETE',
-                            url: BASE_URL + 'purchases/' + purchaseDelete,
+                            url: BASE_URL + 'sales/' + saleDelete,
                             success: function(response) {
                                 if (response.status == "success") {
                                     Swal.fire('Success!', response.message, 'success');
@@ -137,25 +139,25 @@
 
 
 
-            $('form#purchaseFilterForm').submit(function(e) {
+            $('form#saleFilterForm').submit(function(e) {
                 e.preventDefault();
 
                 $.ajax({
-                    data: $('form#purchaseFilterForm').serialize(),
-                    url: "{{ route('purchases.index') }}",
+                    data: $('form#saleFilterForm').serialize(),
+                    url: "{{ route('sales.index') }}",
                     type: "GET",
                     beforeSend: function() {
-                        $('form#purchaseFilterForm button').html('-----');
+                        $('form#saleFilterForm button').html('-----');
                     },
                     success: function(response) {
-                        $('form#purchaseFilterForm button').html('Filter');
-                        $('form#purchaseFilterForm').trigger("reset");
+                        $('form#saleFilterForm button').html('Filter');
+                        $('form#saleFilterForm').trigger("reset");
                         datatablelist.draw();
                         console.log('Success:', response.message);
                     },
                     error: function(response) {
                         datatablelist.draw();
-                        $('form#purchaseFilterForm button').html('Filter');
+                        $('form#saleFilterForm button').html('Filter');
                         console.log('Error:', response.responseJSON.message + ' ' + response.status);
                     }
 

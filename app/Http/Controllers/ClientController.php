@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
+use Illuminate\Http\Request;
+use Yajra\Datatables\Datatables;
+use Illuminate\Support\Facades\Session;
 use App\Http\Requests\StoreClientRequest;
 use App\Http\Requests\UpdateClientRequest;
+use App\Models\Sale;
 
 class ClientController extends Controller
 {
@@ -13,9 +17,24 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            return Datatables::of(Client::all())->addIndexColumn()->make(true);
+        }
+        return view('clients.index');
+    }
+
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Models\Supplier  $supplier
+     * @return \Illuminate\Http\Response
+     */
+    public function getsales(Client $client)
+    {
+        return Datatables::of( Sale::where('client_id',$client->id)->get() )->addIndexColumn()->make(true);
     }
 
     /**
@@ -25,7 +44,8 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('clients.create');
+
     }
 
     /**
@@ -34,9 +54,11 @@ class ClientController extends Controller
      * @param  \App\Http\Requests\StoreClientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreClientRequest $request)
+    public function store(Request $request)
     {
-        //
+        $client = Client::create($request->all());
+        Session::flash('message', "Client Added!");
+        return redirect()->route('clients.index');
     }
 
     /**
@@ -47,7 +69,7 @@ class ClientController extends Controller
      */
     public function show(Client $client)
     {
-        //
+        return view('clients.show',compact('client'));
     }
 
     /**
@@ -58,7 +80,7 @@ class ClientController extends Controller
      */
     public function edit(Client $client)
     {
-        //
+        return view('clients.edit',compact('client'));
     }
 
     /**
@@ -70,7 +92,9 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        //
+        $client->update([$request]);
+        Session::flash('message', "Client Information Updated!");
+        return redirect()->route('clients.show',$client->id);
     }
 
     /**
@@ -81,6 +105,8 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        //
+        $client->delete();
+        Session::flash('message', "Client Deleted!");
+        return redirect()->route('clients.index');
     }
 }
